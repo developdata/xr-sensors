@@ -23,7 +23,7 @@ io.on('connection', function(socket){
     serialport.on('data', function(data){
         data = data.replace(/(\r\n|\n|\r)/gm,"");
         var dataArray = data.split(',');
-        console.log(dataArray);
+        // console.log(dataArray);
         socket.emit("data", dataArray);
     });
     
