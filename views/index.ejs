@@ -2,10 +2,31 @@
 <head>
     <title>XR Sensors</title>
         <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+        <script src="js/socket.js"></script>
 
 </head>
 <body>
+
+<script>
+  AFRAME.registerComponent("sensor", {
+    init: function(){
+      var socket = io();
+
+      socket.on("data", function(data){
+        console.log(data[2]);
+        if(data[2]> 7){
+            box.setAttribute('material', 'color', "#97FF7D");
+        } else {
+            box.setAttribute('material', 'color', "#FF3D74");
+        }
+      })
+
+    }
+  });
+</script>
+
 <a-scene>
+
 <!--     ASSETS -->
     <a-assets>
 
@@ -19,6 +40,7 @@
 <!--     OBJECTS -->
       <a-entity
         id="box"
+        sensor
         geometry="primitive: box" 
         material="color: #FF3D74"
         position="1 0.5 -3"
@@ -40,27 +62,6 @@
 
       </a-entity>
   </a-scene>
-    
-    <!-- <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
-    <script src="js/socket.js"></script>
-    <script src="js/main.js"></script>
-
-    <!-- <script src="js/socket.io-1.2.0.js"></script> -->
-
-     <script>
-        var box = document.getElementById('box');
-        console.log(box);
-        var socket = io();
-        socket.on("data", function(data){
-            // console.log(data);
-            console.log(data[2]);
-            if(data[2]> 7){
-                box.setAttribute('material', 'color', "#97FF7D");
-            } else {
-                box.setAttribute('material', 'color', "#FF3D74");
-            }
-        });
-    </script> 
 </body>
 </html>
 
