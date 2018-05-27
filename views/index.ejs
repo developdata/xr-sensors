@@ -1,69 +1,69 @@
 <!DOCTYPE html>
 <head>
-    <title>XR Sensors</title>
-        <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-        <script src="js/socket.js"></script>
-
+  <title>XR Sensors</title>
+  <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+  <script src="js/socket.js"></script>
 </head>
 <body>
-
 <script>
   AFRAME.registerComponent("sensor", {
+    schema : 
+    {
+      color1: {type: "string", default: "#97FF7D" },
+      color2: {type: "string", default: "#FF3D74"}
+    },
     init: function(){
       var socket = io();
-
+      
+      var color1 = this.data.color1;
+      var color2 = this.data.color2;
+      
       socket.on("data", function(data){
         console.log(data[2]);
         if(data[2]> 7){
-            box.setAttribute('material', 'color', "#97FF7D");
+            box.setAttribute('material', 'color', color1);
         } else {
-            box.setAttribute('material', 'color', "#FF3D74");
+            box.setAttribute('material', 'color', color2);
         }
       })
-
     }
   });
 </script>
 
 <a-scene>
-
 <!--     ASSETS -->
-    <a-assets>
+  <a-assets>
 
-    </a-assets>
-    
+  </a-assets>
+  
 <!--     LIGHTS -->
-    <a-entity light="type: ambient; color: #CCC"></a-entity>
-    <a-entity light="intensity:0.8; castShadow:true" position="1.132 3.844 2.525">
-    </a-entity>
-      
-<!--     OBJECTS -->
-      <a-entity
-        id="box"
-        sensor
-        geometry="primitive: box" 
-        material="color: #FF3D74"
-        position="1 0.5 -3"
-        shadow="receive: false; cast: true"
-      >
-      </a-entity>
+  <a-entity light="type: ambient; color: #CCC"></a-entity>
+  <a-entity light="intensity:0.8; castShadow:true" position="1.132 3.844 2.525">
+  </a-entity>
     
+<!--     OBJECTS -->
+    <a-entity
+      id="box"
+      sensor ="color1: #1B3440; color2: #F2845C;"
+      geometry="primitive: box" 
+      position="1 0.5 -3"
+      shadow="receive: false; cast: true"
+    >
+    </a-entity>
+  
 <!--       BACKGROUNDS -->
-      <a-plane height="200" width="200" color="#404040" rotation="-90 0 0" shadow="receive: true"></a-plane>  
-      <a-sky color="#5095BF" radius="100"></a-sky> 
+    <a-plane height="200" width="200" color="#404040" rotation="-90 0 0" shadow="receive: true"></a-plane>  
+    <a-sky color="#5095BF" radius="100"></a-sky> 
 
 <!--       CAMERAS -->
-      <a-entity camera look-controls position="0 2 1.5">
-        <a-entity cursor="fuse: true; fuseTimeout: 500"
-            position="0 0 -1"
-            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-            material="color: white; shader: flat">
-        </a-entity>
-
+    <a-entity camera look-controls position="0 2 1.5">
+      <a-entity cursor="fuse: true; fuseTimeout: 500"
+          position="0 0 -1"
+          geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+          material="color: white; shader: flat">
       </a-entity>
+
+    </a-entity>
   </a-scene>
 </body>
 </html>
-
-
-
